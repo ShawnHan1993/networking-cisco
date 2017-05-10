@@ -1287,8 +1287,9 @@ class ConfigSyncer(object):
                               'db_intf_dev_id': db_intf["device_id"]})
                     pending_delete_list.append(intf)
                     continue
-
-            correct_grp_num = int(db_intf[ha.HA_INFO]['group'])
+            #import pdb; pdb.set_trace()
+            if (ha.HA_INFO in db_intf):
+                correct_grp_num = int(db_intf[ha.HA_INFO]['group'])
 
             if intf.is_external:
                 intf_db = self.segment_gw_dict

@@ -1071,6 +1071,7 @@ class RoutingServiceHelper(object):
     def _internal_network_added(self, ri, port, ex_gw_port):
         driver = self.driver_manager.get_driver(ri.id)
         driver.internal_network_added(ri, port)
+        #import pdb; pdb.set_trace()
         if ri.snat_enabled and ex_gw_port:
             driver.enable_internal_network_NAT(ri, port, ex_gw_port)
 

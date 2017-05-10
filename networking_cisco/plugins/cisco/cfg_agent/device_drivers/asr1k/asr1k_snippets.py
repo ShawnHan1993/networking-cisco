@@ -24,7 +24,7 @@ CREATE_SUBINTERFACE_WITH_ID = """
 <config>
         <cli-config-data>
             <cmd>interface %s</cmd>
-            <cmd>description OPENSTACK_NEUTRON_INTF</cmd>
+            <cmd>description OPENSTACK_NEUTRON_INTF </cmd>
             <cmd>encapsulation dot1Q %s</cmd>
             <cmd>vrf forwarding %s</cmd>
             <cmd>ip address %s %s</cmd>

@@ -18,6 +18,7 @@ eventlet.monkey_patch()
 import pprint
 import sys
 import time
+import re
 
 from oslo_concurrency import lockutils
 from oslo_config import cfg
@@ -155,8 +156,17 @@ class CiscoCfgAgent(manager.Manager):
         self._dev_status = device_status.DeviceStatus()
         self._dev_status.enable_heartbeat = (
             self.conf.cfg_agent.enable_heartbeat)
-        self.context = n_context.get_admin_context_without_session()
+        with open("/opt/stack/devstack/out_of_band_config.ini", "r") as f:
+            line_by_line_read = f.read().splitlines()
+            interface_dict = {}
+            if '!GLOBAL CONFIG SCOPE' in line_by_line_read:
+                interface_dict['global_scope'] = line_by_line_read[(line_by_line_read.index('!GLOBAL CONFIG SCOPE')+1):]
 
+
+
+        #NOW LETS LOOK AT THE CONTENTS OF OUR DICTIONARY
+        print interface_dict
+        self.context = n_context.get_admin_context_without_session()
         self._initialize_rpc(host)
         self._initialize_service_helpers(host)
         self._start_periodic_tasks()

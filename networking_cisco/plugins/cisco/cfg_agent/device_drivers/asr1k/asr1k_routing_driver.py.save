@@ -14,7 +14,6 @@
 
 import logging
 import netaddr
-import re
 
 from oslo_config import cfg
 
@@ -330,15 +329,11 @@ class ASR1kRoutingDriver(iosxe_driver.IosXeRoutingDriver):
             else:
                 conf_str = (
                     asr1k_snippets.CREATE_SUBINTERFACE_WITH_ID % (
-                        sub_interface,
+                        sub_interfac
                         vlan_id,
                         vrf_name,
                         ip, mask))
-		conf_str = re.sub(r"(</cli-config-data>)", r"    <cmd>ip flow monitor NETFLOW-MONITOR-MAP input</cmd>\n        \1", conf_str)#8 spaces
-		conf_str = re.sub(r"(<cmd>ip flow monitor NETFLOW-MONITOR-MAP input</cmd>\n)", r"<cmd>ip flow monitor NETFLOW-MONITOR-MAP output</cmd>\n            \1", conf_str)#12 spaces
-               # conf_str = re.sub(r"(<cmd>ip flow monitor NETFLOW-MONITOR-MAP output</cmd>\n)", r"<cmd>record netflow-original</cmd>\n            \1", conf_str)#12 spaces
-               # conf_str = re.sub(r"(<cmd>record netflow-original</cmd>\n)", r"<cmd>flow monitor NETFLOW-MONITOR-MAP</cmd>\n            \1", conf_str)#12 spaces
-        #import pdb; pdb.set_trace()
+
         self._edit_running_config(conf_str, 'CREATE_SUBINTERFACE_WITH_ID')
 
     def _create_sub_interface_enable(self, sub_interface):
